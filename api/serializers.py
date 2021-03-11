@@ -9,7 +9,7 @@ class PostSerializer(serializers.ModelSerializer):
                                           slug_field='username')
 
     class Meta:
-        fields = ('id', 'text', 'author', 'pub_date')
+        fields = '__all__'
         model = Post
 
 
@@ -18,7 +18,7 @@ class CommentSerializer(serializers.ModelSerializer):
                                           slug_field='username')
 
     class Meta:
-        fields = ('id', 'author', 'post', 'text', 'created')
+        fields = '__all__'
         model = Comment
 
 
@@ -32,8 +32,8 @@ class GroupSerializer(serializers.ModelSerializer):
 class FollowSerializer(serializers.ModelSerializer):
     user = serializers.SlugRelatedField(
         slug_field='username',
-        queryset=User.objects.all(),
-        default=serializers.CurrentUserDefault()
+        default=serializers.CurrentUserDefault(),
+        read_only=True
     )
     following = serializers.SlugRelatedField(
         slug_field='username',
